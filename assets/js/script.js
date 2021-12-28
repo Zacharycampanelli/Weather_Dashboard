@@ -1,4 +1,36 @@
 var currentWeatherEl = document.querySelector("#today");
+var fiveDayWeatherEl = document.querySelector("#five-day");
+
+function getFiveDayWeatherInfo(data) {
+  // i=0 would be today, which is already displayed. So we loop through array items 1-5 to get the next 5 days
+  for (i = 1; i <= 5; i++) {
+    var dateCard = document.createElement("div");
+    dateCard.classList.add("card");
+
+    var futureDate = document.createElement("h4");
+    var statusIcon =
+      "http://openweathermap.org/img/wn/" +
+      data.daily[i].weather[0].icon +
+      "@2x.png";
+    futureDate.innerHTML =
+      moment().add(i, "d").format("l") + `<img src="${statusIcon}"/>`;
+    dateCard.appendChild(futureDate);
+
+    var futureTemp = document.createElement("li");
+    futureTemp.innerHTML = "Temp: " + data.daily[i].temp.day + "&#8457";
+    dateCard.appendChild(futureTemp);
+
+    var futureWind = document.createElement("li");
+    futureWind.innerHTML = "Wind: " + data.daily[i].wind_speed + "MPH";
+    dateCard.appendChild(futureWind);
+
+    var futureHumidity = document.createElement("li");
+    futureHumidity.innerHTML = "Humidity: " + data.daily[i].humidity + "%";
+    dateCard.appendChild(futureHumidity);
+
+    fiveDayWeatherEl.appendChild(dateCard);
+  }
+}
 
 function displayCurrentWeather(city, status, temp, wind, humid, uv) {
   // if no result
@@ -60,6 +92,7 @@ function getWeatherInfo(x, y, city) {
           humidity,
           uvIndex
         );
+        getFiveDayWeatherInfo(data);
       });
     }
   });
