@@ -3,6 +3,7 @@ var cityFormEl = document.querySelector("#city-form");
 var citySearchEl = document.querySelector("#city");
 var currentWeatherEl = document.querySelector("#today");
 var fiveDayWeatherEl = document.querySelector("#five-day");
+var pastSearchesEl = document.querySelector("#pastSearches");
 
 function getFiveDayWeatherInfo(data) {
   // i=0 would be today, which is already displayed. So we loop through array items 1-5 to get the next 5 days
@@ -102,6 +103,19 @@ function getWeatherInfo(x, y, city) {
   });
 }
 
+function buildPastSearchButtons(cityname) {
+  JSON.parse(window.localStorage.getItem(cityname));
+
+  var searchButton = document.createElement("button");
+  searchButton.innerHTML = cityname;
+  pastSearchesEl.appendChild(searchButton);
+}
+
+function saveSearch(cityname, data) {
+  localStorage.setItem(cityname, JSON.stringify(data));
+  buildPastSearchButtons(cityname);
+}
+
 function getCoordinates(city) {
   var apiUrl =
     "http://api.openweathermap.org/geo/1.0/direct?q=" +
@@ -114,10 +128,12 @@ function getCoordinates(city) {
     .then(function (response) {
       if (response.ok) {
         response.json().then(function (data) {
+          console.log(typeof cityName);
           xCoord = data[0].lat;
           yCoord = data[0].lon;
           cityName = data[0].name;
           console.log(cityName, xCoord, yCoord);
+          saveSearch(cityName, data);
           getWeatherInfo(xCoord, yCoord, cityName);
         });
       } else {
