@@ -1,11 +1,14 @@
 var currentWeatherEl = document.querySelector("#today");
 
-function displayCurrentWeather(city, temp, wind, humid, uv) {
+function displayCurrentWeather(city, status, temp, wind, humid, uv) {
   // if no result
 
   //currentWeatherEl.textContent = "";
+  var statusIcon = "http://openweathermap.org/img/wn/" + status + "@2x.png";
+  var date = moment().format("l");
+
   var cityName = document.createElement("h2");
-  cityName.innerHTML = city;
+  cityName.innerHTML = city + " " + date + `<img src="${statusIcon}"/>`;
   currentWeatherEl.appendChild(cityName);
 
   var temperature = document.createElement("li");
@@ -35,6 +38,7 @@ function getWeatherInfo(x, y, city) {
     y +
     "&units=imperial&appid=648c5d45e53cd2b401e2b5f578752208";
 
+  var weatherStatus;
   var temperature;
   var windSpeed;
   var humidity;
@@ -42,11 +46,20 @@ function getWeatherInfo(x, y, city) {
   fetch(apiUrl).then(function (response) {
     if (response.ok) {
       response.json().then(function (data) {
+        weatherStatus = data.current.weather[0].icon;
         temperature = data.current.temp;
         windSpeed = data.current.wind_speed;
         humidity = data.current.humidity;
         uvIndex = data.current.uvi;
-        displayCurrentWeather(city, temperature, windSpeed, humidity, uvIndex);
+        console.log(data, weatherStatus);
+        displayCurrentWeather(
+          city,
+          weatherStatus,
+          temperature,
+          windSpeed,
+          humidity,
+          uvIndex
+        );
       });
     }
   });
