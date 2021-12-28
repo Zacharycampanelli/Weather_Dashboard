@@ -1,8 +1,12 @@
+var weatherContainerEl = document.querySelector("#weatherContainer");
+var cityFormEl = document.querySelector("#city-form");
+var citySearchEl = document.querySelector("#city");
 var currentWeatherEl = document.querySelector("#today");
 var fiveDayWeatherEl = document.querySelector("#five-day");
 
 function getFiveDayWeatherInfo(data) {
   // i=0 would be today, which is already displayed. So we loop through array items 1-5 to get the next 5 days
+  fiveDayWeatherEl.textContent = "";
   for (i = 1; i <= 5; i++) {
     var dateCard = document.createElement("div");
     dateCard.classList.add("card");
@@ -34,8 +38,7 @@ function getFiveDayWeatherInfo(data) {
 
 function displayCurrentWeather(city, status, temp, wind, humid, uv) {
   // if no result
-
-  //currentWeatherEl.textContent = "";
+  currentWeatherEl.textContent = "";
   var statusIcon = "http://openweathermap.org/img/wn/" + status + "@2x.png";
   var date = moment().format("l");
 
@@ -58,6 +61,7 @@ function displayCurrentWeather(city, status, temp, wind, humid, uv) {
   var uvIndex = document.createElement("li");
   uvIndex.innerHTML = "UV Index: " + uv;
   currentWeatherEl.appendChild(uvIndex);
+  //weatherContainerEl.appendChild(currentWeatherEl);
 
   // currentWeatherEl.
 }
@@ -125,4 +129,18 @@ function getCoordinates(city) {
     });
 }
 
-getCoordinates("torrington");
+function formSubmitHandler(event) {
+  event.preventDefault();
+  var city = citySearchEl.value.trim();
+
+  if (city) {
+    getCoordinates(city);
+    citySearchEl.value = "";
+  } else {
+    alert("Please enter a valid city name");
+  }
+}
+
+//getCoordinates("torrington");
+
+cityFormEl.addEventListener("submit", formSubmitHandler);
