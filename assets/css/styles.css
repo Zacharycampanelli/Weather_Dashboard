@@ -58,7 +58,6 @@ input {
 
 /* One Day Forecast Styles */
 
-
 #today {
   list-style: none;
   width: 95%;
@@ -67,48 +66,47 @@ input {
   line-height: 3em;
 }
 
-
-
 #low {
   background-color: rgb(42, 149, 0);
   padding: 0.2em 1em;
   vertical-align: middle;
-  border-radius: .3em;
+  border-radius: 0.3em;
 }
 
 #moderate {
   background-color: rgb(247, 228, 1);
   padding: 0.2em 1em;
   vertical-align: middle;
-  border-radius: .3em;
+  border-radius: 0.3em;
 }
 
 #high {
   background-color: rgb(249, 88, 3);
   padding: 0.2em 1em;
   vertical-align: middle;
-  border-radius: .3em;
+  border-radius: 0.3em;
 }
 
 #very-high {
   background-color: rgb(217, 2, 17);
   padding: 0.2em 1em;
   vertical-align: middle;
-  border-radius: .3em;
+  border-radius: 0.3em;
 }
 
 #extreme {
   background-color: rgb(109, 73, 203);
   padding: 0.2em 1em;
   vertical-align: middle;
-  border-radius: .3em;
+  border-radius: 0.3em;
 }
 /* Five Day Forecast Styles */
 #five-day {
   list-style: none;
+  width: 95%;
 }
 
-#fiveDayHeader{
+#fiveDayHeader {
   margin-left: 0.6em;
   font-weight: bold;
 }
@@ -118,8 +116,6 @@ input {
   color: #fff;
   margin: 1em;
   line-height: 3em;
-  padding: .5em;
-  
-  flex: 2 0 28%;
-
+  padding: 0.5em;
+  flex: 1 0.5 25%;
 }
