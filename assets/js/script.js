@@ -8,8 +8,17 @@ var pastSearchesEl = document.querySelector("#pastSearches");
 function getFiveDayWeatherInfo(data) {
   // i=0 would be today, which is already displayed. So we loop through array items 1-5 to get the next 5 days
   fiveDayWeatherEl.textContent = "";
+
+  var fiveDayText = document.querySelector("#fiveDayHeader");
+  fiveDayText.innerHTML = "5-Day Forecast:";
+
+  var fiveDayContainer = document.createElement("div");
+  fiveDayContainer.classList.add("d-flex", "flex-row" , "justify-content-between")
+
+  
   for (i = 1; i <= 5; i++) {
     var dateCard = document.createElement("div");
+    dateCard.setAttribute("id", "fiveDayCard")
     dateCard.classList.add("card");
 
     var futureDate = document.createElement("h4");
@@ -18,7 +27,7 @@ function getFiveDayWeatherInfo(data) {
       data.daily[i].weather[0].icon +
       "@2x.png";
     futureDate.innerHTML =
-      moment().add(i, "d").format("l") + `<img src="${statusIcon}"/>`;
+      moment().add(i, "d").format("l") + "<br />" + `<img src="${statusIcon}" style="width:2.5em;height:2.5em;" />`;
     dateCard.appendChild(futureDate);
 
     var futureTemp = document.createElement("li");
@@ -33,7 +42,24 @@ function getFiveDayWeatherInfo(data) {
     futureHumidity.innerHTML = "Humidity: " + data.daily[i].humidity + "%";
     dateCard.appendChild(futureHumidity);
 
-    fiveDayWeatherEl.appendChild(dateCard);
+    
+
+    fiveDayContainer.appendChild(dateCard)
+    fiveDayWeatherEl.appendChild(fiveDayContainer);
+  }
+}
+
+function getUvIndexColor(item, uv) {
+  if (uv <= 2) {
+    item.setAttribute("id", "low");
+  } else if (3 <= uv <= 5) {
+    item.setAttribute("id", "moderate");
+  } else if (6 <= uv <= 7) {
+    item.setAttribute("id", "high");
+  } else if (8 <= uv <= 10) {
+    item.setAttribute("id", "very-high");
+  } else if (uv >= 11) {
+    item.setAttribute("id", "extreme");
   }
 }
 
@@ -43,8 +69,14 @@ function displayCurrentWeather(city, status, temp, wind, humid, uv) {
   var statusIcon = "http://openweathermap.org/img/wn/" + status + "@2x.png";
   var date = moment().format("l");
 
-  var cityName = document.createElement("h2");
-  cityName.innerHTML = city + " " + date + `<img src="${statusIcon}"/>`;
+  var cityName = document.createElement("h3");
+  cityName.innerHTML =
+    city +
+    " (" +
+    date +
+    ") " +
+    `<img src="${statusIcon}" style="width:2.5em;height:2.5em;"/>`;
+  cityName.classList.add("weatherHeader");
   currentWeatherEl.appendChild(cityName);
 
   var temperature = document.createElement("li");
@@ -60,7 +92,12 @@ function displayCurrentWeather(city, status, temp, wind, humid, uv) {
   currentWeatherEl.appendChild(humidity);
 
   var uvIndex = document.createElement("li");
-  uvIndex.innerHTML = "UV Index: " + uv;
+  console.log(uv);
+  uvIndex.innerHTML = "UV Index: ";
+  var uvItem = document.createElement("span");
+  uvItem.innerHTML = uv;
+  getUvIndexColor(uvItem, uv);
+  uvIndex.appendChild(uvItem);
   currentWeatherEl.appendChild(uvIndex);
   //weatherContainerEl.appendChild(currentWeatherEl);
 
@@ -118,6 +155,7 @@ function buildPastSearchButtons(cityname) {
   var searchButton = document.createElement("button");
   searchButton.innerHTML = cityname;
   searchButton.setAttribute("data-city", cityname);
+  searchButton.classList.add("previousSearch");
   pastSearchesEl.appendChild(searchButton);
 }
 
