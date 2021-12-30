@@ -103,11 +103,21 @@ function getWeatherInfo(x, y, city) {
   });
 }
 
+function buttonClickHandler(event) {
+  var selectedCity = event.target.getAttribute("data-city");
+  if (selectedCity) {
+    var storageItem = JSON.parse(window.localStorage.getItem(selectedCity));
+  }
+  console.log(storageItem);
+  getWeatherInfo(storageItem[0].lat, storageItem[0].lon, selectedCity);
+}
+
 function buildPastSearchButtons(cityname) {
   JSON.parse(window.localStorage.getItem(cityname));
 
   var searchButton = document.createElement("button");
   searchButton.innerHTML = cityname;
+  searchButton.setAttribute("data-city", cityname);
   pastSearchesEl.appendChild(searchButton);
 }
 
@@ -160,3 +170,4 @@ function formSubmitHandler(event) {
 //getCoordinates("torrington");
 
 cityFormEl.addEventListener("submit", formSubmitHandler);
+pastSearchesEl.addEventListener("click", buttonClickHandler);
