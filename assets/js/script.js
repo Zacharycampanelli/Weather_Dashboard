@@ -5,7 +5,6 @@ var currentWeatherEl = document.querySelector("#today");
 var fiveDayWeatherEl = document.querySelector("#five-day");
 var pastSearchesEl = document.querySelector("#pastSearches");
 
-
 // Displays the following five days of weather
 function getFiveDayWeatherInfo(data) {
   // i=0 would be today, which is already displayed. So we loop through array items 1-5 to get the next 5 days
@@ -15,12 +14,15 @@ function getFiveDayWeatherInfo(data) {
   fiveDayText.innerHTML = "5-Day Forecast:";
 
   var fiveDayContainer = document.createElement("div");
-  fiveDayContainer.classList.add("d-flex", "flex-row" , "justify-content-between")
+  fiveDayContainer.classList.add(
+    "d-flex",
+    "flex-row",
+    "justify-content-between"
+  );
 
-  
   for (i = 1; i <= 5; i++) {
     var dateCard = document.createElement("div");
-    dateCard.setAttribute("id", "fiveDayCard")
+    dateCard.setAttribute("id", "fiveDayCard");
     dateCard.classList.add("card");
 
     var futureDate = document.createElement("h4");
@@ -29,7 +31,9 @@ function getFiveDayWeatherInfo(data) {
       data.daily[i].weather[0].icon +
       "@2x.png";
     futureDate.innerHTML =
-      moment().add(i, "d").format("l") + "<br />" + `<img src="${statusIcon}" style="width:2.5em;height:2.5em;" />`;
+      moment().add(i, "d").format("l") +
+      "<br />" +
+      `<img src="${statusIcon}" style="width:2.5em;height:2.5em;" />`;
     dateCard.appendChild(futureDate);
 
     var futureTemp = document.createElement("li");
@@ -44,9 +48,7 @@ function getFiveDayWeatherInfo(data) {
     futureHumidity.innerHTML = "Humidity: " + data.daily[i].humidity + "%";
     dateCard.appendChild(futureHumidity);
 
-    
-
-    fiveDayContainer.appendChild(dateCard)
+    fiveDayContainer.appendChild(dateCard);
     fiveDayWeatherEl.appendChild(fiveDayContainer);
   }
 }
@@ -169,7 +171,7 @@ function saveSearch(cityname, data) {
 // Takes the user's search for a city namme and gets the coordinates
 function getCoordinates(city) {
   var apiUrl =
-    "http://api.openweathermap.org/geo/1.0/direct?q=" +
+    "https://api.openweathermap.org/geo/1.0/direct?q=" +
     city +
     "&limit=1&appid=648c5d45e53cd2b401e2b5f578752208";
   var xCoord;
@@ -207,7 +209,6 @@ function formSubmitHandler(event) {
     alert("Please enter a valid city name");
   }
 }
-
 
 cityFormEl.addEventListener("submit", formSubmitHandler);
 pastSearchesEl.addEventListener("click", buttonClickHandler);
