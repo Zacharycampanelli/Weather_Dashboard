@@ -27,7 +27,7 @@ function getFiveDayWeatherInfo(data) {
 
     var futureDate = document.createElement("h4");
     var statusIcon =
-      "http://openweathermap.org/img/wn/" +
+      "https://openweathermap.org/img/wn/" +
       data.daily[i].weather[0].icon +
       "@2x.png";
     futureDate.innerHTML =
@@ -71,7 +71,7 @@ function getUvIndexColor(item, uv) {
 // Displays weather information for the current day
 function displayCurrentWeather(city, status, temp, wind, humid, uv) {
   currentWeatherEl.textContent = "";
-  var statusIcon = "http://openweathermap.org/img/wn/" + status + "@2x.png";
+  var statusIcon = "https://openweathermap.org/img/wn/" + status + "@2x.png";
   var date = moment().format("l");
 
   var cityName = document.createElement("h3");
