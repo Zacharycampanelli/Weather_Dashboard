@@ -5,6 +5,8 @@ var currentWeatherEl = document.querySelector("#today");
 var fiveDayWeatherEl = document.querySelector("#five-day");
 var pastSearchesEl = document.querySelector("#pastSearches");
 
+
+// Displays the following five days of weather
 function getFiveDayWeatherInfo(data) {
   // i=0 would be today, which is already displayed. So we loop through array items 1-5 to get the next 5 days
   fiveDayWeatherEl.textContent = "";
@@ -49,6 +51,7 @@ function getFiveDayWeatherInfo(data) {
   }
 }
 
+// Gets the uv index and changes the background color based on its severity
 function getUvIndexColor(item, uv) {
   if (uv <= 2) {
     item.setAttribute("id", "low");
@@ -63,8 +66,8 @@ function getUvIndexColor(item, uv) {
   }
 }
 
+// Displays weather information for the current day
 function displayCurrentWeather(city, status, temp, wind, humid, uv) {
-  // if no result
   currentWeatherEl.textContent = "";
   var statusIcon = "http://openweathermap.org/img/wn/" + status + "@2x.png";
   var date = moment().format("l");
@@ -99,11 +102,9 @@ function displayCurrentWeather(city, status, temp, wind, humid, uv) {
   getUvIndexColor(uvItem, uv);
   uvIndex.appendChild(uvItem);
   currentWeatherEl.appendChild(uvIndex);
-  //weatherContainerEl.appendChild(currentWeatherEl);
-
-  // currentWeatherEl.
 }
 
+// Takes the coordinates of the location and uses the OpenWeatherAPI to get weather information on that city
 function getWeatherInfo(x, y, city) {
   var apiUrl =
     "https://api.openweathermap.org/data/2.5/onecall?lat=" +
@@ -149,6 +150,7 @@ function buttonClickHandler(event) {
   getWeatherInfo(storageItem[0].lat, storageItem[0].lon, selectedCity);
 }
 
+// Saves a search as a button to allow user to quickly reaccess it
 function buildPastSearchButtons(cityname) {
   JSON.parse(window.localStorage.getItem(cityname));
 
@@ -164,6 +166,7 @@ function saveSearch(cityname, data) {
   buildPastSearchButtons(cityname);
 }
 
+// Takes the user's search for a city namme and gets the coordinates
 function getCoordinates(city) {
   var apiUrl =
     "http://api.openweathermap.org/geo/1.0/direct?q=" +
@@ -205,7 +208,6 @@ function formSubmitHandler(event) {
   }
 }
 
-//getCoordinates("torrington");
 
 cityFormEl.addEventListener("submit", formSubmitHandler);
 pastSearchesEl.addEventListener("click", buttonClickHandler);
