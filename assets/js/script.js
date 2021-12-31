@@ -180,9 +180,11 @@ function getCoordinates(city) {
   fetch(apiUrl)
     .then(function (response) {
       if (response.ok) {
+        console.log(response);
         response.json().then(function (data) {
-          if (typeof data[0] !== undefined) {
+          if (data[0] !== undefined) {
             console.log(data[0]);
+            console.log(data[0] == undefined);
             xCoord = data[0].lat;
             yCoord = data[0].lon;
             cityName = data[0].name;
@@ -193,9 +195,9 @@ function getCoordinates(city) {
             alert("invalid search");
           }
         });
-      } else {
-        alert("not found");
-      }
+      } //else {
+      //   alert("not found");
+      // }
     })
     .catch(function (error) {
       alert("Unable to find city");
