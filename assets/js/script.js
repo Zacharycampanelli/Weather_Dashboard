@@ -181,8 +181,8 @@ function getCoordinates(city) {
     .then(function (response) {
       if (response.ok) {
         response.json().then(function (data) {
-          if (data[0] != undefined) {
-            console.log(response.ok);
+          if (data[0] !== undefined) {
+            console.log(data[0]);
             xCoord = data[0].lat;
             yCoord = data[0].lon;
             cityName = data[0].name;
