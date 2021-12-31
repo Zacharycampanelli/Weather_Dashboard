@@ -181,23 +181,26 @@ function getCoordinates(city) {
     .then(function (response) {
       if (response.ok) {
         response.json().then(function (data) {
-          console.log(typeof cityName);
-          xCoord = data[0].lat;
-          yCoord = data[0].lon;
-          cityName = data[0].name;
-          console.log(cityName, xCoord, yCoord);
-          saveSearch(cityName, data);
-          getWeatherInfo(xCoord, yCoord, cityName);
+          if (data[0] != undefined) {
+            console.log(response.ok);
+            xCoord = data[0].lat;
+            yCoord = data[0].lon;
+            cityName = data[0].name;
+            console.log(cityName, xCoord, yCoord);
+            saveSearch(cityName, data);
+            getWeatherInfo(xCoord, yCoord, cityName);
+          } else {
+            alert("invalid search");
+          }
         });
       } else {
         alert("not found");
       }
     })
     .catch(function (error) {
-      alert("error");
+      alert("Unable to find city");
     });
 }
-
 function formSubmitHandler(event) {
   event.preventDefault();
   var city = citySearchEl.value.trim();
