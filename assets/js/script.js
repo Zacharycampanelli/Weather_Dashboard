@@ -192,15 +192,13 @@ function getCoordinates(city) {
             saveSearch(cityName, data);
             getWeatherInfo(xCoord, yCoord, cityName);
           } else {
-            alert("invalid search");
+            alert("Unable to find city");
           }
         });
-      } //else {
-      //   alert("not found");
-      // }
+      }
     })
     .catch(function (error) {
-      alert("Unable to find city");
+      alert("Error" + error);
     });
 }
 function formSubmitHandler(event) {
