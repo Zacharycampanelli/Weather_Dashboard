@@ -17,8 +17,18 @@ h1 {
 }
 
 /* Search for a City Styles */
+main {
+  background-image: url('../images/cloudyday.jpeg');
+}
+
+#searchBar {
+  background-color: #fff;
+  margin: 1.5em;
+}
+
 .card {
   border: none;
+  background: none;
 }
 
 h3 {
@@ -50,9 +60,9 @@ input {
 .previousSearch {
   width: 92%;
   height: 2.5em;
-  margin-left: 1.3em;
+  margin: 1em 1.3em;
   border: none;
-  margin-top: 1em;
+
   background-color: rgb(187, 182, 182);
 }
 
@@ -60,10 +70,13 @@ input {
 
 #today {
   list-style: none;
-  width: 95%;
+  width: 91%;
   border: 1px solid black;
-  margin: 1em;
+  margin: 1.5em;
+  padding: 1em;
   line-height: 3em;
+  background-color: #fff;
+
 }
 
 #low {
